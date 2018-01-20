@@ -1,26 +1,26 @@
 CUDAFLAGS=-O3 -arch=sm_30 -g -ccbin /usr/bin/g++-5 
-	
+CFLAGS=-g -O3
 all: CFLAGS= -O3
 all: e1
+
+e4: e4
 
 debug: CFLAGS=-g -O3
 debug: e1
 	gdb e1
 
-e1: matriz.o e1.o complex.o cuda.o
-	nvcc $(CUDAFLAGS) -o e1 complex.o e1.o matriz.o cuda.o
+e4: e4.o
+	g++ $(CFLAGS) -o e4 e4.o
+
+e4.o: g6s6c1a.cpp
+	g++ $(CFLAGS) -o e4.o -c g6s6c1a.cpp
+
+e1: e1.o
+	g++ $(CUDAFLAGS) -o e1 e1.o
 
 e1.o:e1.cpp
-	nvcc $(CUDAFLAGS) -dc -c e1.cpp
+	g++ $(CFLAGS) -c e1.cpp
 
-matriz.o:matriz.cpp matriz.h
-	nvcc $(CUDAFLAGS) -dc -x cu -c matriz.cpp
-
-complex.o:complex.cpp complex.h
-	nvcc $(CUDAFLAGS) -dc -x cu -c complex.cpp
-
-cuda.o:cuda.cu cuda.cuh
-	nvcc $(CUDAFLAGS) -dc -c cuda.cu
 
 clean:
 	rm *.o e1

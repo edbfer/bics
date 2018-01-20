@@ -10,7 +10,6 @@
 
 //#include "cuda.cuh"
 
-#include "matriz.h"
 #include "complex.h"
 
 using namespace std;
