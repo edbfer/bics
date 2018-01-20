@@ -6,11 +6,11 @@
 
 using namespace std;
 
+template <typename T>
 class complex
 {
-	double real;
-	double im;
-	static int format;
+	T real;
+	T im;
 
 public:
 	__host__ __device__ complex();
