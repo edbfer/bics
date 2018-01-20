@@ -5,29 +5,25 @@
 
 using namespace std;
 
-namespace poisson
+template <typename T>
+class field
 {
-	class field
-	{
-	private:
-		double* campo;
-		int D;
-		int col;
+ private:
+  typename T* campo;
+  int D;
+  int col;
 
-		int getOffset(int x0, va_list& va);
-		int getOffset(int* coords);
+  int getOffset(int* coords);
 
-	public:
-		field(int D, int col);
+ public:
+  field(int D, int col);
 
-		~field();
+  ~field();
 
-		double getValue(int x0, ...);
-		double getValue(int* coords);
-		void setValue(double v, int x0, ...);
-		void setValue(double v, int* coords);
-		void fill(ifstream& in);
-		void print(ofstream& in);
-		//void setCharge()
-	};
-}
+	        
+  T getValue(int* coords);
+  void setValue(T v, int* coords);
+  void fill(ifstream& in);
+  void print(ofstream& in);
+  //void setCharge()
+};
