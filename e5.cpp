@@ -1,5 +1,6 @@
 #include "complex.h"
 #include "field.h"
+#include "math.h"
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -25,6 +26,8 @@ int main(int argc, char const *argv[])
 	ifstream b("cond.txt");
 	lattice.fill(b);
 	b.close();
+
+	complex<float> norm = simpson2d(lattice);
 
 	ofstream res("result.txt");
 	lattice.print(res);
