@@ -1,6 +1,7 @@
 #pragma once
 
-#include <cstdarg>
+#include <iostream>
+#include <cmath>
 #include <fstream>
 
 using namespace std;
@@ -9,23 +10,21 @@ template <typename T>
 class field
 {
  private:
-  typename T* campo;
+  T* campo;
   int D;
-  int col;
-
-  int getOffset(int* coords);
-
-  
+  int col; 
 
  public:
-  field(int D, int col);
+  field(int D, int col): D(D), col(col)  
+  {
+    int max = (int) pow((double)col, (double)D);
+    campo = new T[max]();
+  }
 
-  ~field();
-	        
-  T getValue(int* coords);
-  void setValue(T v, int* coords);
-  void fill(ifstream& in);
-  void print(ofstream& in);
+  ~field()
+  {
+    delete[] campo;
+  }
 
   T getValue(int* coords)
   {
@@ -42,14 +41,14 @@ class field
     int offset = coords[0];
     for(int i = 1; i<D; i++)
       {
-	offset += (coords[i] * pow(this->col, i));
+	     offset += (coords[i] * pow(this->col, i));
       }
 
     return offset;
   }
 
   
-  T fill(ifstream& in)
+  void fill(ifstream& in)
   {
     int *coords = new int[D]();
 
@@ -68,7 +67,15 @@ class field
     delete[] coords;
   }
 
-  T print(ofstream& out)
+  void fill(T val)
+  {
+    int max = (int) pow((double)col, (double)D);
+    for(int i = 0; i < max; i++)
+      campo[i] = val;
+  }
+
+
+  void print(ofstream& out)
   {
     int *coords = new int[this->D]();
     int max = (int) pow((double)this->col, (double)this->D);

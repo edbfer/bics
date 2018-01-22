@@ -10,7 +10,7 @@ int main(int argc, char const *argv[])
 	cin >> D;
 	cout << "Tamanho: " << endl;
 	cin >> col;
-	ofstream pot("potencial.txt");
+	ofstream pot("cond.txt");
 	while(1)
 	{
 		cout << "Valor a colocar: " << endl;
