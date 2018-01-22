@@ -6,6 +6,7 @@
 #include <cmath>
 
 using namespace std;
+using namespace math;
 
 int main(int argc, char const *argv[])
 {
@@ -27,7 +28,7 @@ int main(int argc, char const *argv[])
 	lattice.fill(b);
 	b.close();
 
-	complex<float> norm = simpson2d(lattice);
+	complex<float> norm = simpson2d<float>(lattice);
 
 	ofstream res("result.txt");
 	lattice.print(res);
