@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include <cstring>
 
 using namespace std;
 
@@ -19,6 +20,13 @@ public:
   {
     int max = (int) pow((double)col, (double)D);
     campo = new T[max]();
+  }
+
+  field(const field<T>& f): D(f.D), col(f.col)
+  {
+    int max = (int) pow((double)col, (double)D);
+    campo = new T[max]();
+    memcpy(campo, f.campo, sizeof(T)*max);
   }
 
   ~field()
@@ -102,5 +110,7 @@ public:
         j++;
       }
     }
+
+    delete[] coords;
   }  
 };
