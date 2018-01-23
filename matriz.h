@@ -1,6 +1,7 @@
 #ifndef _MATRIZ_H
 #define _MATRIZ_H 1
 
+#include <cstdlib>
 #include <cmath>
 #include <iostream>
 #include "complex.h"
@@ -393,7 +394,7 @@ public:
 	}
 	friend complex<T> normInf(matriz& m1)
 	{
-		vector<complex<T>> v;
+		vector<complex<T> > v;
 		complex<T> s = 0.;
 		for(int i = 0; i<m1.n; i++)
 		{
