@@ -37,13 +37,13 @@ public:
 	mutable int dirty;
 	mutable int sigma;
 
-	matriz(const int n = 3, const int m = 3)
+	matriz(const int n = 3, const int m = 3): n(n), m(m)
 	{
 		mat = new complex<T>[n*m];
 		dirty = 1;
 		det = (T)0.;
 	}
-	matriz(const matriz& m1)
+	matriz(const matriz& m1): n(m1.n), m(m1.m)
 	{
 		mat = new complex<T>[n*m];
 		memcpy(mat, m1.mat, sizeof(complex<T>)*n*m);

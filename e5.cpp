@@ -45,5 +45,5 @@ int main(int argc, char const *argv[])
 	ofstream res("result.txt");
 	lattice.print(res);
 
-	return 0xdeadbeef;
+	return 0;
 }
