@@ -1,5 +1,5 @@
 CUDAFLAGS=-O3 -arch=sm_30 -g -ccbin /usr/bin/g++-5 
-CFLAGS=-g -O3
+CFLAGS=-g
 
 all: e5
 

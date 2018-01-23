@@ -9,12 +9,12 @@ using namespace std;
 template <typename T>
 class field
 {
-  private:
+private:
   T* campo;
   int D;
   int col; 
 
-  public:
+public:
   field(int D, int col): D(D), col(col)  
   {
     int max = (int) pow((double)col, (double)D);
@@ -43,10 +43,8 @@ class field
     {
       offset += (coords[i] * pow(this->col, i));
     }
-
     return offset;
   }
-
 
   void fill(ifstream& in)
   {
@@ -54,58 +52,55 @@ class field
 
     while(!in.eof())
     {
-     for(int i = 0; i<D; i++)
-     {
-       in >> coords[i];
-     }
+      for(int i = 0; i<D; i++)
+      {
+        in >> coords[i];
+      }
 
-     int offset = getOffset(coords);
+      int offset = getOffset(coords);
+      in >> campo[offset];
+    }
 
-     in >> campo[offset];
-   }
-
-   delete[] coords;
+    delete[] coords;
   }
 
   void fill(T val)
   {
-  int max = (int) pow((double)col, (double)D);
-  for(int i = 0; i < max; i++)
-    campo[i] = val;
+    int max = (int) pow((double)col, (double)D);
+    for(int i = 0; i < max; i++)
+      campo[i] = val;
   }
-
 
   void print(ofstream& out)
   {
-  int *coords = new int[this->D]();
-  int max = (int) pow((double)this->col, (double)this->D);
+    int *coords = new int[this->D]();
+    int max = (int) pow((double)this->col, (double)this->D);
 
-  for(int i = 0; i<max; i++)
-  {
-
-   int j = 0;
-   for(j = 0; j<D; j++)
-   {
-     out << coords[j] << "\t";
-   }
-
-   int of = getOffset(coords);
-   out << campo[of] << endl;
-
-   j = 0;
-   while(j<D)
-   {
-     if(coords[j] < (this->col-1))
-     {
-      coords[j]++;
-      break;
-    }
-    else
+    for(int i = 0; i<max; i++)
     {
-      coords[j] = 0;
+      int j = 0;
+      for(j = 0; j<D; j++)
+      {
+        out << coords[j] << "\t";
+      }
+
+      int of = getOffset(coords);
+      out << campo[of] << endl;
+
+      j = 0;
+      while(j<D)
+      {
+        if(coords[j] < (this->col-1))
+        {
+          coords[j]++;
+          break;
+        }
+        else
+        {
+          coords[j] = 0;
+        }
+        j++;
+      }
     }
-    j++;
-   }
-  }
-}  
+  }  
 };
