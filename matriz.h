@@ -5,6 +5,7 @@
 #include <iostream>
 #include "complex.h"
 #include <vector>
+#include <cstring>
 
 using namespace std;
 
@@ -40,7 +41,7 @@ public:
 	{
 		mat = new complex<T>[n*m];
 		dirty = 1;
-		det = 0.;
+		det = (T)0.;
 	}
 	matriz(const matriz& m1)
 	{
@@ -93,6 +94,18 @@ public:
 		}
 		return res;
 	}
+	static matriz tridiagonal(complex<T> d0, complex<T> dp, complex<T> d1, int x)
+	{
+		matriz res(x, x);
+		for (int i = 0; i<x-1; i++)
+		{
+			res(i, i) = dp;
+			res(i, i + 1) = d1;
+			res(i + 1, i) = d0;
+		}
+		res(x-1, x-1) = dp;
+		return res;
+	}
 
 	inline complex<T>& operator()(const int& n, const int& m)
 	{
@@ -137,17 +150,6 @@ public:
 			for(int j = 0; j<m; j++)
 			{
 				(*this)(i, j) = (*this)(i, j) + (complex<T>) 1.;
-			}
-		}
-		return *this;
-	}
-	matriz operator~()
-	{
-		for (int i = 0; i < n; i++)
-		{
-			for (int j = 0; j < m; j++)
-			{
-				~(*this)(i, j);
 			}
 		}
 		return *this;
@@ -258,26 +260,28 @@ public:
 	}
 	friend matriz operator+(const matriz& m1, const matriz& m2)
 	{
-		for(int i = 0; i<n; i++)
+		matriz res(m1.n, m1.m);
+		for(int i = 0; i<m1.n; i++)
 		{
-			for(int j = 0; j<m; j++)
+			for(int j = 0; j<m1.m; j++)
 			{
-				(*this)(i, j) = (*this)(i, j) + (complex<T>) 1.;
+				res(i, j) = m1(i, j) + m2(i, j);
 			}
 		}
-		return *this;
+		return res;
 	}
 	//friend matriz sum_cuda(matriz& m1, matriz& m2);
 	friend matriz operator-(const matriz& m1, const matriz& m2)
 	{
-		for(int i = 0; i<n; i++)
+		matriz res(m1.n, m1.m);
+		for(int i = 0; i<m1.n; i++)
 		{
-			for(int j = 0; j<m; j++)
+			for(int j = 0; j<m1.m; j++)
 			{
-				(*this)(i, j) = -(*this)(i, j);
+				res(i, j) = m1(i, j) - m2(i, j);
 			}
 		}
-		return *this;
+		return res;
 	}
 	friend matriz operator*(const matriz& m1, const matriz& m2)
 	{
@@ -299,7 +303,7 @@ public:
 
 		return newm;
 	}
-	friend matriz operator~(const matriz& m1)
+	matriz operator~()
 	{
 		for (int i = 0; i < n; i++)
 		{
