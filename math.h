@@ -10,40 +10,12 @@ using namespace std;
 namespace math
 {
 	double h;
+	double x0;
+	double y0;
 
 	template <typename T>
 	complex<T> simpsonPond(int i, int j, complex<T> vij)
 	{
-		/*double multi;
-		if(	(i == 0 && j == 0) ||
-				(i == 0 && j == 127) ||
-				(i == 127 && j == 0) ||
-				(i == 127 && j == 127))
-		{
-			multi = 1;
-		} else if((i == 0 || j == 0) && (i != 127 && j != 127))
-		{
-			if(i % 2 == 0)
-				multi = 2;
-			else
-				multi = 4;
-		} else
-		{
-			if(i % 2 == 0)
-			{
-				if(j % 2 == 1)
-					multi = 8;
-				else
-					multi = 4;
-			}
-			else
-			{
-				if(j % 2 == 1)
-					multi = 16;
-				else
-					multi = 8;
-			}
-		}*/
 		double multi = 0;
 		if(	(i == 0 && j == 0) ||
 				(i == 0 && j == 127) ||
