@@ -24,7 +24,7 @@ class matriz
 
 	struct gaussInfo
 	{
-		int ispermutation;	
+		int ispermutation;
 		int p1;
 		int p2;
 		complex<T> v;
@@ -110,7 +110,7 @@ public:
 		return res;
 	}
 
-	complex<T>& operator()(int& x, int& y)
+	complex<T>& operator()(int x, int y)
 	{
 		return mat[x * m + y];
 	}
@@ -354,7 +354,7 @@ public:
 	}
 	friend istream& operator>> (istream& in, matriz& m1)
 	{
-		for (int i = 0; i<m1.n; i++)	
+		for (int i = 0; i<m1.n; i++)
 		{
 			for(int j = 0; j<m1.m; j++)
 			{
@@ -485,7 +485,7 @@ public:
 
 			for(int row = (inv)?col-1:col+1; (inv)?row>=0:row<n; (inv)?row--:row++)
 			{
-				complex<T> v1 = (*this)(row, col);	
+				complex<T> v1 = (*this)(row, col);
 
 				if(v1 == 0.)
 					continue;
@@ -596,6 +596,19 @@ public:
 			}
 		}
 	}
-};
 
+	matriz execute(complex<T> (*func) (int i, int j, complex<T> vij))
+	{
+		matriz<T> res(n, m);
+
+		for(int i = 0; i<n; i++)
+		{
+			for(int j = 0; j<m; j++)
+			{
+				res(i, j) = func(i, j, (*this)(i, j));
+			}
+		}
+		return res;
+	}
+};
 #endif //_MATRIX_H

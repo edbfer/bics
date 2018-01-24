@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
 	float dt;
 	cin >> dt;
 
-	lattice.fill(cond);
+	/*lattice.fill(cond);2acf2de1-444c-4b39-b707-323917289e24
 
 	ifstream b("cond.txt");
 	lattice.fill(b);
@@ -39,17 +39,25 @@ int main(int argc, char const *argv[])
 
 	ofstream init("initial.txt");
 	lattice.printCoord(init);
+
 	init.close();
-
-	math::h = 20.0/128.0;
-
-	//complex<float> norm = simpson2d<float>(lattice);
+	init.close();	*/
+	math::h = 20.0/129.0;
 	 derivuxa= dx<float>(lattice);
 	 derivuya= dy<float>(lattice);
 	//lattice = dy<float>(lattice);
 
-	ofstream res("result.txt");
-	lattice.printCoord(res);
+
+	cout << "Integral: " << norm << endl;
+
+	/*lattice = dx<float>(lattice);
+	ofstream ddx("dx.txt");
+	lattice.printCoord(ddx);
+	ddx.close();
+
+	lattice = dy<float>(lattice);
+	ofstream res("dy.txt");
+	lattice.printCoord(res);*/
 
 	matriz<float> lapx= d2x<float> (lattice);
 	matriz<float> lapy= d2y <float>(lattice);
