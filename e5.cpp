@@ -13,6 +13,8 @@ int main(int argc, char const *argv[])
 
 	matriz<float> lattice(128, 128);
 
+	complex<float> i(0, 1);
+
 	ifstream f("params.txt");
 	f >> gamma >> omega >> G;
 	f.close();
@@ -37,26 +39,14 @@ int main(int argc, char const *argv[])
 
 	ofstream init("initial.txt");
 	lattice.printCoord(init);
+
+	init.close();
 	init.close();	*/
 	math::h = 20.0/129.0;
+	 derivuxa= dx<float>(lattice);
+	 derivuya= dy<float>(lattice);
+	//lattice = dy<float>(lattice);
 
-	double x, y;
-	for (int i = 0; i<128; i++)
-	{
-		for (int j = 0; j<128; j++)
-		{
-			x = -10 + h*i;
-			y = -10 + h*j;
-			lattice(i, j) = 1/x;
-		}
-	}
-
-	complex<float> norm = simpson2d<float>(lattice);
-
-	/*ofstream init("initial.txt");
-	init << lattice;*/
-
-	//complex<float> norm = simpson2d<float>(lattice);
 
 	cout << "Integral: " << norm << endl;
 
@@ -68,6 +58,20 @@ int main(int argc, char const *argv[])
 	lattice = dy<float>(lattice);
 	ofstream res("dy.txt");
 	lattice.printCoord(res);*/
+
+	matriz<float> lapx= d2x<float> (lattice);
+	matriz<float> lapy= d2y <float>(lattice);
+	matriz<float> lap = lapx + lapy;
+
+	matriz<float> laplacianu(128,128)= (-0.5*lap);
+	matriz<float> paressela2(128,128)= ((x*x + y*y)/2)*lattice;
+	matriz<float> paressela3(128,128)= G*norm*norm*lattice;
+
+	matriz<float> parssialex(128,128)=y*dx;
+	matriz<float> parssialey(128,128)=x*dy;
+
+	matriz<float> ultimeparcele(128,128)= i*omega*(parssialey-parssialex);
+
 
 	return 0;
 }
