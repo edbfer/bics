@@ -29,7 +29,7 @@ namespace math
 			{
 				pond(i,0)=(complex<T>)2;
 				pond(i,127)=(complex<T>)2;
-			}else if(i!=0 && i!=127 && i%2==1)
+			}else
 			{
 				pond(i,0)=(complex<T>)4;
 				pond(i,127)=(complex<T>)4;
@@ -42,17 +42,10 @@ namespace math
 			{
 				if(j%2==0)
 				{
-<<<<<<< HEAD
 					pond(i,j)=((complex<T>)2)*pond(0, j);
 				} else
 				{
 					pond(i,j)=((complex<T>)4)*pond(0, j);
-=======
-					pond(i,j)=((complex<T>)2)*pond(i,0);
-				} else
-				{
-					pond(i,j)=((complex<T>)4)*pond(i,0);
->>>>>>> 9b1755fd2e44a4f1030cb40fe37c9ffe050cdaa5
 				}
 			}
 		}

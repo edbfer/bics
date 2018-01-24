@@ -4,48 +4,21 @@
 #include <cmath>
 #include <fstream>
 #include <cstring>
+#include "matriz.h"
 
 using namespace std;
 
 template <typename T>
-class field
-{
-private:
-  T* campo;
-  int D;
-  int col; 
-
+class field : public matriz<T>{
 public:
-  field(int D, int col): D(D), col(col)  
-  {
-    int max = (int) pow((double)col, (double)D);
-    campo = new T[max]();
-  }
+  field(int col): matriz<T>(col, col){}
 
-  field(const field<T>& f): D(f.D), col(f.col)
-  {
-    int max = (int) pow((double)col, (double)D);
-    campo = new T[max]();
-    memcpy(campo, f.campo, sizeof(T)*max);
-  }
-
-  ~field()
-  {
-    delete[] campo;
-  }
-
-  T getValue(int* coords)
-  {
-    return campo[getOffset(coords)];	
-  }
-
-  void setValue(T v, int* coords)
-  {
-    campo[getOffset(coords)] = v;
-  }
+  field(const field<T>& f): matriz<T>(f)
+  {}
 
   int getOffset(int* coords)
   {
+    int D = 2;
     int offset = coords[0];
     for(int i = 1; i<D; i++)
     {
@@ -56,17 +29,17 @@ public:
 
   void fill(ifstream& in)
   {
-    int *coords = new int[D]();
+    int *coords = new int[2]();
 
     while(!in.eof())
     {
-      for(int i = 0; i<D; i++)
+      for(int i = 0; i<2; i++)
       {
         in >> coords[i];
       }
 
       int offset = getOffset(coords);
-      in >> campo[offset];
+      in >> mat[offset];
     }
 
     delete[] coords;
@@ -74,43 +47,8 @@ public:
 
   void fill(T val)
   {
-    int max = (int) pow((double)col, (double)D);
+    int max = n*m;
     for(int i = 0; i < max; i++)
-      campo[i] = val;
-  }
-
-  void print(ofstream& out)
-  {
-    int *coords = new int[this->D]();
-    int max = (int) pow((double)this->col, (double)this->D);
-
-    for(int i = 0; i<max; i++)
-    {
-      int j = 0;
-      for(j = 0; j<D; j++)
-      {
-        out << coords[j] << "\t";
-      }
-
-      int of = getOffset(coords);
-      out << campo[of] << endl;
-
-      j = 0;
-      while(j<D)
-      {
-        if(coords[j] < (this->col-1))
-        {
-          coords[j]++;
-          break;
-        }
-        else
-        {
-          coords[j] = 0;
-        }
-        j++;
-      }
-    }
-
-    delete[] coords;
-  }  
+      mat[i] = val;
+  } 
 };
