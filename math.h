@@ -59,10 +59,10 @@ namespace math
 	matriz<T> dx(matriz<T> f)
 	{
 		matriz<T> res(f.n, f.m);
-		matriz<float> d = matriz<float>::tridiagonal(1, 0, 1, 128);
-		f = transpose(f);
+		matriz<float> d = matriz<float>::tridiagonal(-1, 0, 1, 128);
+		//f = transpose(f);
 		res = d * f;
-		res = res * (complex<T>)(1/(0.5*h));
+		res = res * (complex<T>)(0.5);
 		return res;
 	}
 
@@ -70,10 +70,10 @@ namespace math
 	matriz<T> dy(matriz<T>& f)
 	{
 		matriz<T> res(f.n, f.m);
-		matriz<float> d = matriz<float>::tridiagonal(1, 0, 1, 128);
+		matriz<float> d = matriz<float>::tridiagonal(-1, 0, 1, 128);
 
 		res = d * f;
-		res = res * (complex<T>)(1/(0.5*h));
+		//res = res * (complex<T>)(1/(0.5*h));
 		return res;
 	}
 }
