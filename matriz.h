@@ -110,7 +110,11 @@ public:
 		return res;
 	}
 
-	complex<T>& operator()(int x, int y)
+	complex<T>& operator()(int& x, int& y)
+	{
+		return mat[x * m + y];
+	}
+	complex<T>& operator()(int& x, int& y) const
 	{
 		return mat[x * m + y];
 	}
