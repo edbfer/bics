@@ -1,4 +1,4 @@
-CUDAFLAGS=-O3 -arch=sm_30 -g -ccbin /usr/bin/g++-5 
+CUDAFLAGS=-O3 -arch=sm_30 -g -ccbin /usr/bin/g++-5
 CFLAGS=-g
 
 all: e5
@@ -32,4 +32,4 @@ e1.o:e1.cpp
 
 
 clean:
-	rm *.o e1 e5
+	rm *.o e1 e5 dados/*

@@ -58,6 +58,9 @@ matriz<T> F(double G, double gamma, double omega, matriz<T>& lattice)
 		matriz<float> total = laplacianu + paressela2 + paressela3 + ultimeparcele;
 		total = total * (1/(i - gamma));
 
+		norm = simpson2d<float>(total);
+		total = total * (1/sqrt((float) norm));
+
 		return total;
 }
 
@@ -98,23 +101,40 @@ int main(int argc, char const *argv[])
 
 	for(double t = 0; t<tmax; t += dt)
 	{
+		stringstream file;
+		//sfile << "dados/flat" << i << ".txt";
 		matriz<float> flat = F<float>(G, gamma, omega, lattice);
+		//ofstream fl(file.str());
+		//fl << flat;
 
+		//file.str("");
+		//file << "dados/fpsi1" << i << ".txt";
 		matriz<float> psi1 = lattice + (flat * dt);
 		matriz<float> fpsi1 = F<float>(G, gamma, omega, psi1);
+		//ofstream fp1(file.str());
+		//fp1 << fpsi1;
 
+		//file.str("");
+		//file << "dados/fpsi2" << i << ".txt";
 		matriz<float> psi2 = (lattice*(3./4.)) + (psi1*(1./2.)) + (fpsi1*(dt*(1./4.)));
 		matriz<float> fpsi2 = F<float>(G, gamma, omega, psi2);
+		//ofstream fp2(file.str());
+		//fp2 << fpsi2;
 
+		//file.str("");
+		//file << "dados/psitot" << i << ".txt";
 		matriz<float> psitotal = (lattice*(1./3.)) + (psi2*(2./3.)) + (fpsi2*(dt*(2./3.)));
 
+		//file.str("");
+		//file << "dados/psitotnorm" << i << ".txt";
 		complex<float> norm = simpson2d<float>(psitotal);
 		psitotal = psitotal * (1/sqrt((float) norm));
+		//ofstream psitot(file.str());
+		//psitot << psitotal;
 
-		stringstream file;
-		file << "dados/t" << t << ".txt";
+		file.str("");
+		file << "dados/t" << i << ".txt";
 		ofstream out(file.str());
-
 		psitotal.printCoord(out);
 
 		out.close();
