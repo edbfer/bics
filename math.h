@@ -1,7 +1,6 @@
 #pragma once
 
 #include "complex.h"
-#include "field.h"
 #include "matriz.h"
 
 #include <fstream>
@@ -10,8 +9,10 @@ using namespace std;
 
 namespace math
 {
-template <typename T>
-complex<T> simpson2d(field<T> f)
+	double h;
+
+	template <typename T>
+	complex<T> simpson2d(matriz<T> f)
 	{
 		ofstream out("fixeru.txt");
 		matriz<T> pond(128,128);
@@ -41,10 +42,10 @@ complex<T> simpson2d(field<T> f)
 			{
 				if(j%2==0)
 				{
-					pond(i,j)=((complex<T>)2)*pond(i,1);
+					pond(i,j)=((complex<T>)2)*pond(0, j);
 				} else
 				{
-					pond(i,j)=((complex<T>)4)*pond(i,1);
+					pond(i,j)=((complex<T>)4)*pond(0, j);
 				}
 			}
 		}
@@ -52,5 +53,27 @@ complex<T> simpson2d(field<T> f)
 		out << pond;
 
 		return 0;
+	}
+
+	template <typename T>
+	matriz<T> dx(matriz<T> f)
+	{
+		matriz<T> res(f.n, f.m);
+		matriz<float> d = matriz<float>::tridiagonal(1, 0, 1, 128);
+		f = transpose(f);
+		res = d * f;
+		res = res * (complex<T>)(1/(0.5*h));
+		return res;
+	}
+
+	template <typename T>
+	matriz<T> dy(matriz<T>& f)
+	{
+		matriz<T> res(f.n, f.m);
+		matriz<float> d = matriz<float>::tridiagonal(1, 0, 1, 128);
+
+		res = d * f;
+		res = res * (complex<T>)(1/(0.5*h));
+		return res;
 	}
 }

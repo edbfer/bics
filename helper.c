@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
 			{
 				pot << coords[j] << "\t";
 			}
-			pot << v << endl;
+			pot << v << "\t" << "0" << endl;
 			coords[n]++;
 		}	
 

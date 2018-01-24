@@ -14,7 +14,8 @@ class complex
  public:
  complex() : real(0.), im(0.) {}
  complex(int real) : real(real), im(0.) {}
- complex(T real) : real(real), im(0.) {}
+ complex(double real) : real((T)real), im(0.) {}
+ complex(float real) : real((T)real), im(0.) {}
  complex(T real, T im) : real(real), im(0.) {}
 
   complex operator-()

@@ -1,5 +1,4 @@
 #include "complex.h"
-#include "field.h"
 #include "math.h"
 #include <iostream>
 #include <fstream>
@@ -12,7 +11,7 @@ int main(int argc, char const *argv[])
 {
 	double gamma, omega, G;
 
-	field<float> lattice(2, 128);
+	matriz<float> lattice(128, 128);
 
 	ifstream f("params.txt");
 	f >> gamma >> omega >> G;
@@ -36,14 +35,18 @@ int main(int argc, char const *argv[])
 	lattice.fill(b);
 	b.close();
 
-	complex<float> norm = simpson2d<float>(lattice);
+	ofstream init("initial.txt");
+	lattice.printCoord(init);
+	init.close();	
 
-	matriz<float> tri = matriz<float>::tridiagonal(1, 0, 1, 128);
-	ofstream print("outma.txt");
-	print << tri;
+	math::h = 20.0/128.0;
+
+	//complex<float> norm = simpson2d<float>(lattice);
+	lattice = dx<float>(lattice);
+	//lattice = dy<float>(lattice);
 
 	ofstream res("result.txt");
-	lattice.print(res);
+	lattice.printCoord(res);
 
 	return 0;
 }

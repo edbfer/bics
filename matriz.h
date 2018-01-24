@@ -101,16 +101,18 @@ public:
 		for (int i = 0; i<x-1; i++)
 		{
 			res(i, i) = dp;
-			res(i, i + 1) = d1;
-			res(i + 1, i) = d0;
+			int j2 = i + 1;
+			res(i, j2) = d1;
+			res(j2, i) = d0;
 		}
-		res(x-1, x-1) = dp;
+		int j2 = x-1;
+		res(j2, j2) = dp;
 		return res;
 	}
 
-	inline complex<T>& operator()(const int& n, const int& m)
+	complex<T>& operator()(int& x, int& y)
 	{
-		return mat[n * this->m + m];
+		return mat[x * m + y];
 	}
 
 	complex<T>* operator[](const size_t i) const
@@ -284,7 +286,7 @@ public:
 		}
 		return res;
 	}
-	friend matriz operator*(const matriz& m1, const matriz& m2)
+	friend matriz operator*(matriz& m1, matriz& m2)
 	{
 		matriz newm(m1.n, m2.m);
 		for (int i = 0; i<newm.m; i++)
@@ -316,7 +318,7 @@ public:
 		return *this;
 	}
 	//friend matriz multiply_cuda(matriz& m1, matriz& m2);
-	friend matriz operator*(const matriz& m1, complex<T> v)
+	friend matriz operator*(matriz& m1, complex<T> v)
 	{
 		matriz res = m1;
 		int i = 0, j = 0;
@@ -324,7 +326,7 @@ public:
 		{
 			for(j = 0; j<m1.m; j++)
 			{
-				res(i, j) = res(i, j) * v;
+				res(i, j) = m1(i, j) * v;
 			}
 		}
 
@@ -550,7 +552,7 @@ public:
 		}
 
 		matriz eigenvalues(m1.n, 1);
-	//rayleigh quotien
+		//rayleigh quotien
 		for (int i = 0; i < m1.m; i++)
 		{
 			matriz x = extract(v0, 0, v0.n - 1, i, i);
@@ -561,6 +563,38 @@ public:
 
 		v0 = extend(v0, eigenvalues);
 		return v0;
+	}
+
+	void fill(istream& in)
+	{
+		while(!in.eof())
+		{
+			int x, y;
+			in >> x >> y;
+			in >> (*this)(x, y);
+		}
+	}
+
+	void fill(complex<T> val)
+	{
+		for(int i = 0; i<n; i++)
+		{
+			for(int j = 0; j<m; j++)
+			{
+				(*this)(i, j) = val;
+			}
+		}
+	}
+
+	void printCoord(ostream& o)
+	{
+		for(int i = 0; i<n; i++)
+		{
+			for(int j = 0; j<m; j++)
+			{
+				o << i << "\t" << j << "\t" << (*this)(i, j) << endl;
+			}
+		}
 	}
 };
 
