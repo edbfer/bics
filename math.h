@@ -28,7 +28,7 @@ complex<T> simpson2d(field<T> f)
 			{
 				pond(i,0)=(complex<T>)2;
 				pond(i,127)=(complex<T>)2;
-			}else
+			}else if(i!=0 && i!=127 && i%2==1)
 			{
 				pond(i,0)=(complex<T>)4;
 				pond(i,127)=(complex<T>)4;
@@ -41,10 +41,10 @@ complex<T> simpson2d(field<T> f)
 			{
 				if(j%2==0)
 				{
-					pond(i,j)=((complex<T>)2)*pond(i,1);
+					pond(i,j)=((complex<T>)2)*pond(i,0);
 				} else
 				{
-					pond(i,j)=((complex<T>)4)*pond(i,1);
+					pond(i,j)=((complex<T>)4)*pond(i,0);
 				}
 			}
 		}
