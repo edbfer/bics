@@ -94,6 +94,9 @@ int main(int argc, char const *argv[])
 
 	math::h = 20.0/129.0;
 
+	math::x0=-10;
+	math::y0=-10;
+
 	complex<float> norm = simpson2d<float>(lattice);
 	lattice = lattice * (1/sqrt((float) norm));
 
