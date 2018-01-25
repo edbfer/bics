@@ -134,7 +134,7 @@ int main(int argc, char const *argv[])
 
 		file.str("");
 		file << "dados/t" << i << ".txt";
-		ofstream out(file.str());
+		ofstream out(file.str().c_str());
 		psitotal.printCoord(out);
 
 		out.close();
